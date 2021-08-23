@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  tensorflow-dev:
+    image: tensorflow-dev
+    build:
+      context: config
+      dockerfile: Dockerfile

@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  tensorflow-dev:
+    image: tensorflow-dev
+    build:
+      context: config
+      dockerfile: Dockerfile
+    args: 
+      - USER
+      - HOME
+    # command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m main "]
+    ports:
+      - 6006:6006

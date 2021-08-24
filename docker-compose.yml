@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.9'
 
 services:
   tensorflow-dev:
@@ -6,3 +6,9 @@ services:
     build:
       context: config
       dockerfile: Dockerfile
+      args:
+        USER: liushuai
+    ports:
+      - "6006:6006"
+    volumes:
+      - .:/workspace

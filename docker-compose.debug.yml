@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.9'
 
 services:
   tensorflow-dev:
@@ -6,9 +6,12 @@ services:
     build:
       context: config
       dockerfile: Dockerfile
-    args: 
-      - USER
-      - HOME
-    # command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m main "]
+      args:
+        USER: liushuai
+        Local: local
     ports:
-      - 6006:6006
+      - "6006:6006"
+      - "22:25"
+    volumes:
+      - .:/workspace
+      - $Local:${Local}

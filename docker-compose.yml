@@ -8,7 +8,10 @@ services:
       dockerfile: Dockerfile
       args:
         USER: liushuai
+        Local: local
     ports:
       - "6006:6006"
+      - "22:25"
     volumes:
       - .:/workspace
+      - $Local:${Local}

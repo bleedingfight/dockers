@@ -6,12 +6,21 @@ services:
     build:
       context: config
       dockerfile: Dockerfile
+      shm_size: '8gb'
       args:
         USER: liushuai
         Local: local
+        workspace: workspace
+    container_name: tensorflow-devlop
+    restart: 'always'
+    cap_add:
+      - ALL
+    cap_drop:
+      - NET_ADMIN
+      - SYS_ADMIN
     ports:
       - "6006:6006"
       - "22:25"
     volumes:
-      - .:/workspace
-      - $Local:${Local}
+      - ${PWD}:/workspace
+      # - $Local:${Local}

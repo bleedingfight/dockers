@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   tensorflow-dev:
@@ -13,5 +13,11 @@ services:
       - "6006:6006"
       - "22:25"
     volumes:
-      - .:/workspace
+      - ${workspace}:/workspace
       - $Local:${Local}
+    command: bash -c '
+      REPOSITORY=${workspace} &&
+      pushd ${workspace} &&
+      mkdir -p auto_tools &&
+      popd &&
+      bash -c "while sleep 1000; do :; done"

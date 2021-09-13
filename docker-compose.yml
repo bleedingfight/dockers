@@ -3,6 +3,7 @@ version: '3.9'
 services:
   tensorflow-dev:
     image: tensorflow-dev
+    env_file: .devcontainer/devcontainer.env
     build:
       context: .devcontainer
       dockerfile: Dockerfile

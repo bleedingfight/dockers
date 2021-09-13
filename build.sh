@@ -1,5 +1,5 @@
 #!/bin/bash
-local_path='config/local'
+local_path='.devcontainer/local'
 workspace=./workspace 
 function mkdir_safe(){
 	work_path=$1
@@ -9,6 +9,8 @@ function mkdir_safe(){
 }
 mkdir_safe ${local_path}
 mkdir_safe ${workspace}
-
+if [ -d ${HOME}/.vscode ];then
+	echo ""
+fi
 cp ${HOME}/.ssh/id_rsa.pub ${local_path} 
 docker-compose up --build

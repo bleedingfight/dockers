@@ -4,14 +4,17 @@ services:
   tensorflow-dev:
     image: tensorflow-dev
     build:
-      context: config
+      context: .devcontainer
       dockerfile: Dockerfile
       shm_size: '8gb'
       args:
         USER: liushuai
         Local: local
         workspace: workspace
+    environment: 
+      Tensorflow_ENV: devlopmental
     container_name: tensorflow-devlop
+    user: liushuai
     restart: 'always'
     cap_add:
       - ALL

@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  ubuntu-dev:
+    image: bleedingfight
+    build:
+      context: .devcontainer
+      dockerfile: ./Dockerfile
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports: 
+      - 8888:8888
+      - 22:22
+    volumes:
+      - .:/workspace/
+      - ${HOME}/.ssh/id_rsa.pub:${HOME}/.ssh/authorized_keys
+    command: /bin/sh -c "while sleep 1000; do :; done"

@@ -18,6 +18,8 @@ RUN echo "yes\n"|sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/mast
         /home/${USER}/.vscode-server-insiders/extensions \
     && chown -R ${USER} \
         /home/${USER}/.vscode-server \
-        /home/${USER}/.vscode-server-insiders
+        /home/${USER}/.vscode-server-insiders\
+	&& SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=${HOME}/.zsh_history" \
+    && echo $SNIPPET >> "${HOME}/.zshrc"
 WORKDIR ${HOME}
 LABEL Name=Ubuntu20.04 Version=0.0.1

@@ -24,6 +24,9 @@
 		"PATH": "${containerEnv:PATH}",
 		"LD_LIBRARY_PATH": "/usr/local/include:${LD_LIBRARY_PATH}"
 	},
+	"mounts":[
+    "source=${localEnv:HOME},target=/,type=bind,consistency=cached"
+],
 	"remoteUser": "liushuai",
 	"containerUser": "liushuai",
 	"shutdownAction": "none",

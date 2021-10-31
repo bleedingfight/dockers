@@ -13,7 +13,7 @@
 	// },
 
 	"containerEnv": {
-		"USER": "liushuai",
+		"USER": "root",
 		"PATH": "/WORKSPACE",
 		"EDITOR": "${localEnv:EDITOR}"
 	},
@@ -22,7 +22,7 @@
 		"LD_LIBRARY_PATH": "/usr/local/include"
 	},
 	"postCreateCommand": "tensorboard --logdir=/workspace &",
-	"remoteUser": "liushuai",
+	"remoteUser": "root",
 	"shutdownAction": "none",
 	"runArgs": [
 		"--env-file",

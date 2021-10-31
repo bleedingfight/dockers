@@ -2,57 +2,42 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.194.0/containers/docker-existing-docker-compose
 // If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
 {
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
-	"forwardPorts": [
-		22,
-		6006,
-		8888
+	"name": "Existing Docker Compose (Extend)",
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+	"dockerComposeFile": [
+		"../docker-compose.debug.yml",
+		"docker-compose.yml"
 	],
-	// "workspaceFolder": "${HOME}/",
-	"name": "ubuntu20.04-dev",
-	"settings": {
-		"terminal.integrated.shell.linux": "/usr/bin/zsh"
-	},
-	"containerEnv": {
-		"USER": "liushuai",
-		"WORKSPACE": "/home/${USER}",
-		"EDITOR": "${localEnv:EDITOR}"
-	},
-	"remoteEnv": {
-		"PATH": "${containerEnv:PATH}",
-		"LD_LIBRARY_PATH": "/usr/local/include:${LD_LIBRARY_PATH}"
-	},
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "openppl",
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/workspace",
 	"mounts": [
-		"source=${localEnv:HOME}/tensorflow,target=/home/liushuai/tensorflow,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.cache,target=/home/liushuai/.cache,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.vim,target=/home/liushuai/.vim,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.vimrc,target=/home/liushuai/.vimrc,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.oh-my-zsh,target=/home/liushuai/.oh-my-zsh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/ppl.nn,target=/home/liushuai/ppl.nn,type=bind,consistency=cached"
 	],
-	"remoteUser": "liushuai",
-	"containerUser": "liushuai",
-	"shutdownAction": "none",
-	"runArgs": [
-		"--env-file",
-		".devcontainer/devcontainer.env"
-	],
+	// Set *default* container specific settings.json values on container create.
+	"settings": {},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"austin.code-gnu-global",
 		"ms-vscode.cpptools",
+		"austin.code-gnu-global",
 		"twxs.cmake",
 		"ms-vscode.cmake-tools",
+		"formulahendry.code-runner",
+		"vadimcn.vscode-lldb",
+		"eamodio.gitlens",
+		"ms-toolsai.jupyter",
+		"ms-toolsai.jupyter-keymap",
 		"ms-vsliveshare.vsliveshare",
 		"ms-vsliveshare.vsliveshare-audio",
 		"ms-python.vscode-pylance",
 		"ms-python.python",
 		"tht13.python",
 		"kevinrose.vsc-python-indent",
-		"mutantdino.resourcemonitor",
-		"tabnine.tabnine-vscode",
-		"visualstudioexptteam.vscodeintellicode"
+		"tabnine.tabnine-vscode"
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

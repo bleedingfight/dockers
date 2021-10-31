@@ -16,4 +16,5 @@ services:
     volumes:
       - .:/workspace/
       - ${HOME}/.ssh/id_rsa.pub:${HOME}/.ssh/authorized_keys
-    command: /bin/sh -c "while sleep 1000; do :; done"
+      - ${HOME}/.vimrc:${HOME}/.vimrc
+    command: pip install pip -U && pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple&&/bin/sh -c "while sleep 1000; do :; done"

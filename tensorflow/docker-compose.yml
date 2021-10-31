@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
       shm_size: '8gb'
       args:
-        USER: liushuai
+        USER: root
         Local: local
     environment: 
       Tensorflow_ENV: devlopmental
@@ -26,4 +26,3 @@ services:
       - "22:25"
     volumes:
       - ${PWD}:/workspace
-      # - $Local:${Local}

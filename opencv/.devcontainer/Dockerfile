@@ -18,7 +18,7 @@ RUN echo "yes\n"|sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/mast
     && chown -R ${USER} \
         /home/${USER}/.vscode-server \
         /home/${USER}/.vscode-server-insiders\
-        && SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=${HOME}/.zsh_history" \
+        && SNIPPET="export PROMPT_COMMAND='history -xport HISTFILE=${HOME}/.zsh_history" \
     && echo $SNIPPET >> "${HOME}/.zshrc"
 WORKDIR ${HOME}
 

@@ -1,0 +1,47 @@
+{
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"forwardPorts": [
+		22,
+		6006
+	],
+	// "remoteUser": "liushuai",
+	"name": "tensorflow-dev",
+	// "settings": {
+	//   "terminal.integrated.shell.linux": "/bin/bash"
+	// },
+
+	"containerEnv": {
+		"USER": "root",
+		"PATH": "/WORKSPACE",
+		"EDITOR": "${localEnv:EDITOR}"
+	},
+	"remoteEnv": {
+		"PATH": "${containerEnv:PATH}",
+		"LD_LIBRARY_PATH": "/usr/local/include"
+	},
+	"postCreateCommand": "tensorboard --logdir=/workspace &",
+	"remoteUser": "root",
+	"shutdownAction": "none",
+	"runArgs": [
+		"--env-file",
+		".devcontainer/devcontainer.env"
+	],
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"ms-vscode.cpptools",
+		"ms-vscode.cpptools-extension-pack",
+		"austin.code-gnu-global",
+		"ms-ceintl.vscode-language-pack-zh-hans",
+		"twxs.cmake",
+		"ms-vscode.cmake-tools",
+		"formulahendry.code-runner",
+		"eamodio.gitlens",
+		"ms-python.vscode-pylance",
+		"ms-python.python",
+		"tht13.python",
+		"kevinrose.vsc-python-indent",
+		"visualstudioexptteam.vscodeintellicode"
+	],
+}

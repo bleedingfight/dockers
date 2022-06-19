@@ -1,8 +1,8 @@
 version: '3.9'
 
 services:
-  tensorflow-dev:
-    image: tensorflow-dev
+  open-mmlab-dev:
+    image: open-mmlab-dev
     env_file: .devcontainer/devcontainer.env
     build:
       context: .devcontainer
@@ -13,7 +13,7 @@ services:
         Local: local
     environment: 
       Tensorflow_ENV: devlopmental
-    container_name: tensorflow-devlop
+    container_name: open-mmlab-devlop
     user: liushuai
     restart: 'always'
     cap_add:
@@ -30,6 +30,6 @@ services:
       - /home/liushuai/.oh-my-zsh:/home/liushuai/.oh-my-zsh
       - /home/liushuai/.vimrc:/home/liushuai/.vimrc
       - /home/liushuai/.vscode/:/home/liushuai/.vscode/
-      - /home/liushuai/test:/home/liushuai/tensorflow/test
+      - /home/liushuai/test:/home/liushuai/open-mmlab/test
       - /home/liushuai/.cache:/home/liushuai/.cache
-      - /home/liushuai/tensorflow:/home/liushuai/tensorflow
+      - /home/liushuai/open-mmlab:/home/liushuai/open-mmlab

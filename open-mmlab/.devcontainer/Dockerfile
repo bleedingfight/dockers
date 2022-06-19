@@ -1,13 +1,9 @@
-FROM nvidia/cuda:11.6.2-cudnn8-devel-ubuntu20.04 as tensorflow-dev
+FROM pytorch/pytorch:latest as open-mmlab-dev
 ENV LANG C.UTF-8
 ARG USER=liushuai
 ARG PASSWORD=574794581
 ARG Local=local
 ARG DEBIAN_FRONTEND=noninteractive
-ARG PYTHON_VERSION=py39
-ARG MINICOND_VERSION=4.12.0
-ARG MINICOND=Miniconda3-${PYTHON_VERSION}_${MINICOND_VERSION}-Linux-x86_64.sh
-ARG BAZEL=bazel_5.1.1-linux-x86_64.deb
 
 LABEL maintainer="bleedingfight <bleedingfight@126.com>"
 

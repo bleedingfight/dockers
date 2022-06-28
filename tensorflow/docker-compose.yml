@@ -2,7 +2,8 @@ version: '3.9'
 
 services:
   tensorflow-dev:
-    image: tensorflow-dev
+    image: tensorflow-dev-latest
+    runtime: nvidia
     env_file: .devcontainer/devcontainer.env
     build:
       context: .devcontainer
@@ -10,10 +11,9 @@ services:
       shm_size: '8gb'
       args:
         USER: root
-        Local: local
     environment: 
       Tensorflow_ENV: devlopmental
-    container_name: tensorflow-devlop
+    container_name: tensorflow-devlop-lastest
     user: liushuai
     restart: 'always'
     cap_add:
@@ -23,13 +23,12 @@ services:
       - SYS_ADMIN
     ports:
       - "6006:6006"
-      - "22:25"
+      - "25:25"
     volumes:
-      - ${PWD}:/workspace
-      - /home/liushuai/.zshrc:/home/liushuai/.zshrc
-      - /home/liushuai/.oh-my-zsh:/home/liushuai/.oh-my-zsh
-      - /home/liushuai/.vimrc:/home/liushuai/.vimrc
-      - /home/liushuai/.vscode/:/home/liushuai/.vscode/
-      - /home/liushuai/test:/home/liushuai/tensorflow/test
-      - /home/liushuai/.cache:/home/liushuai/.cache
-      - /home/liushuai/tensorflow:/home/liushuai/tensorflow
+      - /home/liushuai/.zshrc:/root/.zshrc
+      - /home/liushuai/.oh-my-zsh:/root/.oh-my-zsh
+      - /home/liushuai/.vimrc:/root/.vimrc
+      - /home/liushuai/.vscode/:/root/.vscode/
+      - /home/liushuai/test:/root/tensorflow/test
+      - /home/liushuai/.cache:/root/.cache
+      - /home/liushuai/tensorflow:/root/tensorflow

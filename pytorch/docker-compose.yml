@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   pytorch-dev-latest:
-    image: pytorch-dev-latest
+    image: pytorch-dev-cudnn8-latest
     runtime: nvidia
     env_file: .devcontainer/devcontainer.env
     build:
@@ -10,10 +10,10 @@ services:
       dockerfile: Dockerfile
       shm_size: '8gb'
       args:
-        USER: root
+        USER: liushuai
     environment: 
-      Tensorflow_ENV: devlopmental
-    container_name: pytorch-devlop-latest
+      Pytorch_ENV: devlopmental
+    container_name: pytorch-devlop-cudnn8-latest
     user: liushuai
     restart: 'always'
     cap_add:
@@ -25,11 +25,9 @@ services:
       - "6007:6007"
       - "23:23"
     volumes:
-      - /home/liushuai/.zshrc:/root/.zshrc
-      - /home/liushuai/.oh-my-zsh:/root/.oh-my-zsh
-      - /home/liushuai/.vimrc:/root/.vimrc
-      - /home/liushuai/.vim:/root/.vim
-      - /home/liushuai/.vscode/:/root/.vscode
-      - /home/liushuai/pytorch:/root/pytorch
-      - /home/liushuai/test:/root/pytorch/test
-      - /home/liushuai/pytorch/build:/root/pytorch/build
+      - /home/liushuai/.config/nvim:/home/liushuai/.config/nvim
+      - /home/liushuai/.local/nvim:/home/liushuai/.local/nvim
+      - /home/liushuai/.ssh:/home/liushuai/.ssh
+      - /home/liushuai/.vscode/:/home/liushuai/.vscode
+      - /home/liushuai/pytorch:/home/liushuai/pytorch
+      - /home/liushuai/pytorch/build:/home/liushuai/pytorch/build

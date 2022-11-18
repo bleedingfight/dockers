@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   tensorflow-dev:
-    image: tensorflow-dev-latest
+    image: tensorflow-master-cuda11.2-ubuntu20-dev
     runtime: nvidia
     env_file: .devcontainer/devcontainer.env
     build:
@@ -13,8 +13,7 @@ services:
         USER: root
     environment: 
       Tensorflow_ENV: devlopmental
-    container_name: tensorflow-devlop-lastest
-    user: liushuai
+    container_name: tensorflow-master-cuda11.2-ubuntu20-dev
     restart: 'always'
     cap_add:
       - ALL
@@ -32,3 +31,5 @@ services:
       - /home/liushuai/test:/root/tensorflow/test
       - /home/liushuai/.cache:/root/.cache
       - /home/liushuai/tensorflow:/root/tensorflow
+      - /home/liushuai/models:/root/tensorflow/models 
+      - /software/classfications:/software/classfications

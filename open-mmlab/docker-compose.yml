@@ -10,11 +10,8 @@ services:
       shm_size: '8gb'
       args:
         USER: root
-        Local: local
-    environment: 
-      Tensorflow_ENV: devlopmental
-    container_name: open-mmlab-devlop
-    user: liushuai
+    container_name: open-mmlab-dev
+    user: root
     restart: 'always'
     cap_add:
       - ALL
@@ -23,13 +20,14 @@ services:
       - SYS_ADMIN
     ports:
       - "6006:6006"
-      - "22:25"
+      - "25:25"
     volumes:
-      - ${PWD}:/workspace
       - /home/liushuai/.zshrc:/home/liushuai/.zshrc
       - /home/liushuai/.oh-my-zsh:/home/liushuai/.oh-my-zsh
       - /home/liushuai/.vimrc:/home/liushuai/.vimrc
       - /home/liushuai/.vscode/:/home/liushuai/.vscode/
       - /home/liushuai/test:/home/liushuai/open-mmlab/test
-      - /home/liushuai/.cache:/home/liushuai/.cache
       - /home/liushuai/open-mmlab:/home/liushuai/open-mmlab
+      - /home/liushuai/mmdetection:/home/liushuai/mmdetection
+      - /home/liushuai/mmcv:/home/liushuai/mmcv
+

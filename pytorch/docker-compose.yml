@@ -1,20 +1,21 @@
 version: '3.9'
 
 services:
-  pytorch-dev-latest:
-    image: pytorch-dev-cudnn8-latest
+  pytorch-cudnn-dev-latest:
+    image: pytorch-dev-cudnn8-custom-latest
     runtime: nvidia
     env_file: .devcontainer/devcontainer.env
     build:
       context: .devcontainer
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.pytorch
       shm_size: '8gb'
       args:
-        USER: liushuai
+        USER: ${USER}
     environment: 
-      Pytorch_ENV: devlopmental
-    container_name: pytorch-devlop-cudnn8-latest
-    user: liushuai
+      Pytorch_ENV: development
+      USER: ${USER}
+    container_name: pytorch-devlop-custom-cudnn8-latest
+    user: ${USER}
     restart: 'always'
     cap_add:
       - ALL
@@ -26,8 +27,9 @@ services:
       - "23:23"
     volumes:
       - /home/liushuai/.config/nvim:/home/liushuai/.config/nvim
-      - /home/liushuai/.local/nvim:/home/liushuai/.local/nvim
       - /home/liushuai/.ssh:/home/liushuai/.ssh
+      - /home/liushuai/.tmux.conf:/home/liushuai/.tmux.conf
       - /home/liushuai/.vscode/:/home/liushuai/.vscode
       - /home/liushuai/pytorch:/home/liushuai/pytorch
       - /home/liushuai/pytorch/build:/home/liushuai/pytorch/build
+    command: /bin/sh -c "while sleep 1000; do :; done"

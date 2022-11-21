@@ -1,0 +1,35 @@
+FROM nvidia/cuda:11.6.2-cudnn8-devel-ubuntu20.04 as pytorch-development-base
+ENV LANG C.UTF-8
+ARG USER=liushuai
+ARG PASSWORD=574794581
+ARG DEBIAN_FRONTEND=noninteractive
+ARG PYTHON_VERSION=py39
+ARG MINICOND_VERSION=4.12.0
+ARG MINICOND=Miniconda3-${PYTHON_VERSION}_${MINICOND_VERSION}-Linux-x86_64.sh
+ARG CMAKE_VERSION=cmake-3.25.0
+ARG HOME=/home/${USER}
+ARG USER_UID
+ARG USER_GID
+
+
+LABEL maintainer="bleedingfight <bleedingfight@126.com>"
+SHELL ["/bin/bash", "-c"]
+
+RUN sed -i '1i\# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic main restricted universe multiverse\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-security main restricted universe multiverse\n\n# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-security main restricted universe multiverse\n\# 预发布软件源，不建议启用\n\# deb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse' /etc/apt/sources.list 
+RUN apt update -y&& apt install apt-utils nmap git wget zsh sudo openssh-server iproute2 mlocate unzip zlib1g-dev libssl-dev libevent-dev libncurses-dev gnutls-bin sqlite tree curl -y  
+RUN useradd --create-home --no-log-init --shell /bin/bash ${USER} && usermod -G sudo "${USER}" && echo "${USER}:${PASSWORD}" | chpasswd
+RUN wget -c https://github.com/Kitware/CMake/releases/download/v3.25.0/${CMAKE_VERSION}.tar.gz -O /tmp/${CMAKE_VERSION}.tar.gz && tar xzvf /tmp/${CMAKE_VERSION}.tar.gz -C /tmp && cd /tmp/${CMAKE_VERSION} && ./configure && make -j8 && make install \ 
+&& wget -c https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz -O /tmp/tmux-3.3a.tar.gz \ 
+&& tar xzvf /tmp/tmux-3.3a.tar.gz -C /tmp && cd /tmp/tmux-3.3a && ./configure && make -j8 && mv tmux /usr/local/bin && wget -c https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage \ 
+&& chmod a+x nvim.appimage&&./nvim.appimage --appimage-extract &&./squashfs-root/AppRun --version &&mv squashfs-root /&&ln -s /squashfs-root/AppRun /usr/bin/nvim && rm -rf /tmp/* 
+# & git clone --recursive https://github.com/pytorch/pytorch && cd pytorch && git submodule sync && git submodule update --init --recursive --jobs 0  && export USE_CUDA=1
+EXPOSE 22
+# RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && chsh -s /usr/bin/zsh && groupadd -r -f -g ${USER_GID} ${USER} && useradd -o -r -l -u ${USER_UID} -g ${USER_GID} -ms /bin/bash ${USERE} || true 
+USER ${USER}:${USER}
+RUN git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ~/powerlevel10k && curl -L git.io/antigen > ${HOME}/antigen.zsh && echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' > ${HOME}/.zshrc && echo 'source ~/antigen.zsh'>>${HOME}/.zshrc && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm\ 
+&& wget -c https://mirrors.bfsu.edu.cn/anaconda/miniconda/${MINICOND} -O /tmp/${MINICOND}&&bash /tmp/${MINICOND} -b -p ${HOME}/miniconda3 && rm -rf /tmp/${MINICOND}&& rm -rf /tmp/*
+RUN export PATH=${HOME}/miniconda3/bin:${PATH} && python -m pip install -i https://mirrors.bfsu.edu.cn/pypi/web/simple --upgrade pip && pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple
+# && echo "alias vim=nvim">>${HOME}/.zshrc && git clone --depth 1 https://github.com/wbthomason/packer.nvim  ~/.local/share/nvim/site/pack/packer/start/packer.nvim \
+#&& conda config --set https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free && conda config --set https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main\
+#conda config --set show_channel_urls yes && conda install astunparse numpy ninja pyyaml setuptools cffi typing_extensions future six requests dataclasses mkl mkl-include -y \
+WORKDIR ${HOME}

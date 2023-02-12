@@ -34,11 +34,4 @@ services:
       - /home/liushuai/pytorch:/home/liushuai/pytorch
       - /home/liushuai/pytorch/build:/home/liushuai/pytorch/build
       - /home/liushuai/openlab:/home/liushuai/openlab
-      - /home/liushuai/下载:/home/liushuai/download
-      - /home/liushuai/audio:/home/liushuai/audio
-      - /home/liushuai/mmyolo:/home/liushuai/mmyolo
-      - /home/liushuai/mmclassification:/home/liushuai/mmclassification
-      - /home/liushuai/mmdetection:/home/liushuai/mmdetection
-      - /home/liushuai/mmocr:/home/liushuai/mmocr
-      - /home/liushuai/mmagic:/home/liushuai/mmagic
     command: /bin/sh -c "while sleep 1000; do :; done"

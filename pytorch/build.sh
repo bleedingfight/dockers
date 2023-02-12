@@ -14,5 +14,7 @@ if [ -d ${HOME}/.vscode ]; then
 fi
 cp -r ${HOME}/.ssh ${local_path}
 # docker-compose --build --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) .
-docker-compose build --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g)
+cp ${HOME}/.ssh/id_rsa.pub ${local_path}
+# docker-compose --build --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) .
+docker-compose build --build-arg USER_UID="$(id -u)" --build-arg USER_GID="$(id -g)"
 docker-compose up -d

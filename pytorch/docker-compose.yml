@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   pytorch-cudnn-dev-latest:
@@ -8,15 +8,15 @@ services:
     build:
       context: .devcontainer
       dockerfile: Dockerfile.pytorch
-      shm_size: '8gb'
+      shm_size: "8gb"
       args:
         USER: ${USER}
-    environment: 
+    environment:
       Pytorch_ENV: development
       USER: ${USER}
     container_name: pytorch-devlop-custom-cudnn8-latest
     user: ${USER}
-    restart: 'always'
+    restart: "always"
     cap_add:
       - ALL
     cap_drop:
@@ -32,4 +32,6 @@ services:
       - /home/liushuai/.vscode/:/home/liushuai/.vscode
       - /home/liushuai/pytorch:/home/liushuai/pytorch
       - /home/liushuai/pytorch/build:/home/liushuai/pytorch/build
+      - /home/liushuai/openlab:/home/liushuai/openlab
     command: /bin/sh -c "while sleep 1000; do :; done"
+

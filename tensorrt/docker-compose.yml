@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  llvm-project:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+      args:
+        USER: liushuai
+    image: tensorrt-23.02-python3
+    container_name: tensorrt-23.02-python3
+    cap_add:
+      - ALL # 开启全部权限
+    cap_drop:
+      - SYS_PTRACE # 关闭 ptrace权限
+    ports:
+      - "8000:5000"
+    env_file:
+      - .devcontainer/devcontainer.env
+    volumes:
+      - /home/liushuai/.zshrc:/home/liushuai/.zshrc
+      - /home/liushuai/.oh-my-zsh:/home/liushuai/.oh-my-zsh
+      - /home/liushuai/.vimrc:/home/liushuai/.vimrc
+      - /home/liushuai/.vscode/:/home/liushuai/.vscode/
+      - /home/liushuai/llvm-project:/home/liushuai/llvm-project
+    working_dir: ${HOME}/llvm-project
+    labels:
+      com.startupteam.description: "llvm basic"
+      com.startupteam.department: "development for llvm"
+      com.startupteam.release: "rc1 for v1.0"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3

@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
   pytorch-cudnn-dev-latest:
     image: pytorch-dev-cudnn8-custom-latest
@@ -8,13 +7,14 @@ services:
     build:
       context: .devcontainer
       dockerfile: Dockerfile.pytorch
-      shm_size: "8gb"
+      shm_size: "16gb"
       args:
         USER: ${USER}
+    shm_size: 16gb
     environment:
       Pytorch_ENV: development
       USER: ${USER}
-    container_name: pytorch-devlop-custom-cudnn8-latest
+    container_name: pytorch-devlop-custom-ubuntu20-cudnn8-latest
     user: ${USER}
     restart: "always"
     cap_add:
@@ -33,5 +33,10 @@ services:
       - /home/liushuai/pytorch:/home/liushuai/pytorch
       - /home/liushuai/pytorch/build:/home/liushuai/pytorch/build
       - /home/liushuai/openlab:/home/liushuai/openlab
+      - /home/liushuai/下载:/home/liushuai/download
+      - /home/liushuai/audio:/home/liushuai/audio
+      - /home/liushuai/mmyolo:/home/liushuai/mmyolo
+      - /home/liushuai/mmclassification:/home/liushuai/mmclassification
+      - /home/liushuai/mmdetection:/home/liushuai/mmdetection
+      - /home/liushuai/mmocr:/home/liushuai/mmocr
     command: /bin/sh -c "while sleep 1000; do :; done"
-

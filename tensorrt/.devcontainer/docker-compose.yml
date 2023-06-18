@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   ubuntu-dev:
@@ -10,11 +10,11 @@ services:
       - SYS_PTRACE
     security_opt:
       - seccomp:unconfined
-    ports: 
+    ports:
       - 8888:8888
       - 22:22
     volumes:
       - .:/workspace/
-      - ${HOME}/.ssh/id_rsa.pub:${HOME}/.ssh/authorized_keys
+      - ${HOME}/.ssh:${HOME}/.ssh
       - ${HOME}/.vimrc:${HOME}/.vimrc
     command: pip install pip -U && pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple&&/bin/sh -c "while sleep 1000; do :; done"

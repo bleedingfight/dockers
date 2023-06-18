@@ -12,7 +12,7 @@ mkdir_safe ${workspace}
 if [ -d ${HOME}/.vscode ]; then
 	echo ""
 fi
-cp -r ${HOME}/.ssh ${local_path}
+cp -r ${HOME}/.ssh/id_rsa.pub ${local_path}
 # docker-compose --build --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) .
 docker-compose build --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g)
 docker-compose up -d

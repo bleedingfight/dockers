@@ -1,12 +1,12 @@
 version: "3.9"
 services:
   pytorch-cudnn-dev-latest:
-    image: pytorch-dev-cudnn8-custom-latest
+    image: pytorch-devlop-ubuntu20-cudnn8-debug
     runtime: nvidia
     env_file: .devcontainer/devcontainer.env
     build:
       context: .devcontainer
-      dockerfile: Dockerfile.pytorch
+      dockerfile: Dockerfile
       shm_size: "16gb"
       args:
         USER: ${USER}
@@ -26,8 +26,9 @@ services:
       - "6007:6007"
       - "23:23"
     volumes:
-      - /home/liushuai/.config/nvim:/home/liushuai/.config/nvim
-      - /home/liushuai/.ssh:/home/liushuai/.ssh
+      - /home/liushuai/.local/nvim:/home/liushuai/.local/nvim
+      - /home/liushuai/.ssh/id_rsa:/home/liushuai/.ssh/id_rsa
+      - /home/liushuai/.ssh/id_rsa.pub:/home/liushuai/.ssh/id_rsa.pub
       - /home/liushuai/.tmux.conf:/home/liushuai/.tmux.conf
       - /home/liushuai/.vscode/:/home/liushuai/.vscode
       - /home/liushuai/pytorch:/home/liushuai/pytorch
@@ -39,4 +40,5 @@ services:
       - /home/liushuai/mmclassification:/home/liushuai/mmclassification
       - /home/liushuai/mmdetection:/home/liushuai/mmdetection
       - /home/liushuai/mmocr:/home/liushuai/mmocr
+      - /home/liushuai/mmagic:/home/liushuai/mmagic
     command: /bin/sh -c "while sleep 1000; do :; done"

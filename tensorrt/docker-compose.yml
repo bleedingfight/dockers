@@ -27,7 +27,7 @@ services:
       - "24:24"
     volumes:
       - /home/liushuai/.config/nvim:/home/liushuai/.config/nvim
-      - /home/liushuai/.ssh:/home/liushuai/.ssh
+      - /home/liushuai/.ssh/id_rsa.pub:/home/liushuai/.ssh/id_rsa.pub
       - /home/liushuai/.tmux.conf:/home/liushuai/.tmux.conf
       - /home/liushuai/.vscode/:/home/liushuai/.vscode
       - /home/liushuai/下载:/home/liushuai/download

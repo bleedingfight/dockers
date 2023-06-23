@@ -1,2 +1,3 @@
 *.xz
+*.gz
 tensorrt/.devcontainer/.ssh/id_rsa.pub

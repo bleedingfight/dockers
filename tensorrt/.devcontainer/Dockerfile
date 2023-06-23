@@ -10,11 +10,14 @@ ARG CMAKE_VERSION=3.27.0-rc2
 ARG HOME=/home/${USER}
 ARG USER_UID
 ARG USER_GID
+ARG USER
+ARG PASSWORD
 ARG TMUX_VERSION=3.3a
 ARG NODE_VERSION=v18.15.0
+
 LABEL maintainer="bleedingfight <bleedingfight@126.com>"
-RUN sed -i '1i\# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic main restricted universe multiverse\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse\ndeb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-security main restricted universe multiverse\n\n# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-security main restricted universe multiverse\n\# 预发布软件源，不建议启用\n\# deb https://mirrors.bfsu.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse\n\# deb-src https://mirrors.bfsu.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse' /etc/apt/sources.list 
-RUN apt update -y&& apt install apt-utils nmap git wget zsh sudo openssh-server iproute2 mlocate unzip zlib1g-dev libssl-dev libevent-dev libncurses-dev gnutls-bin sqlite3 tree curl ctags npm libvorbis-dev libvpx-dev libvpx-dev libx264-dev libmp3lame-dev libopus-dev libfreetype6-dev nasm libjpeg-dev libpng-dev fish -y  && useradd --create-home --no-log-init --shell /bin/bash ${USER} && usermod -G sudo "${USER}" && echo "${USER}:${PASSWORD}" | chpasswd
+RUN sed -i "s/archive.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list
+RUN apt update -y && apt install apt-utils nmap git wget zsh sudo openssh-server iproute2 mlocate unzip zlib1g-dev libssl-dev libevent-dev libncurses-dev gnutls-bin sqlite3 tree curl libvorbis-dev libvpx-dev libvpx-dev libx264-dev libmp3lame-dev libopus-dev libfreetype6-dev nasm libjpeg-dev libpng-dev fish -y  && useradd --create-home --no-log-init --shell /bin/bash ${USER} && usermod -G sudo "${USER}" && echo "${USER}:${PASSWORD}" | chpasswd
 RUN wget -c https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-${CMAKE_VERSION}.tar.gz -O /tmp/cmake-${CMAKE_VERSION}.tar.gz && tar xzvf /tmp/cmake-${CMAKE_VERSION}.tar.gz -C /tmp && cd /tmp/cmake-${CMAKE_VERSION} && ./configure && make -j8 && make install \ 
 && wget -c https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz -O /tmp/tmux-$TMUX_VERSION.tar.gz \ 
 && tar xzvf /tmp/tmux-$TMUX_VERSION.tar.gz -C /tmp && cd /tmp/tmux-$TMUX_VERSION && ./configure && make -j8 && mv tmux /usr/local/bin && wget -c https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage \ 

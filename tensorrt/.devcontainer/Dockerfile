@@ -120,8 +120,9 @@ ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${TRT_OSSPATH}/build/out:${TRT_LIBPATH}"
 WORKDIR /workspace
 
 ARG NODE_VERSION=v18.15.0
-RUN apt install curl -y && wget -c https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage \ 
-&& chmod a+x nvim.appimage &&./nvim.appimage --appimage-extract &&mv squashfs-root /usr/nvim&&ln -s /usr/nvim/AppRun /usr/bin/vim && wget -c https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz -O /tmp/node-$NODE_VERSION-linux-x64.tar.xz  &&mkdir /usr/local/node && tar xJvf /tmp/node-$NODE_VERSION-linux-x64.tar.xz -C /usr/local/node && rm -rf /tmp/ 
+RUN apt install curl npm -y && wget -c https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage \ 
+&& chmod a+x nvim.appimage &&./nvim.appimage --appimage-extract &&mv squashfs-root /usr/nvim&&ln -s /usr/nvim/AppRun /usr/bin/vim
+# RUN wget -c https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz -O /tmp/node-$NODE_VERSION-linux-x64.tar.xz  &&mkdir /usr/local/node && tar xJvf /tmp/node-$NODE_VERSION-linux-x64.tar.xz -C /usr/local/node && rm -rf /tmp/
 USER $USER
 RUN curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish && git clone -b lite https://github.com/bleedingfight/nvimdots.git ${HOME}/.config/nvim 
 RUN ["/bin/bash"]

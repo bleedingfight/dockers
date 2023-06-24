@@ -1,13 +1,16 @@
 FROM ubuntu:22.04 AS ubuntu22.04-develop
-ARG USER 
+
+ARG uid
+ARG gid
+ARG USER
 ARG PASSWORD
 ARG HOME 
-ARG USER_GID
-ARG USER_UID
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i "s/archive.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list &&apt update && apt install software-properties-common -y && apt-add-repository ppa:fish-shell/release-3 && apt update && apt install ca-certificates  libssl-dev sudo nmap openssh-server iproute2 wget curl git apt-utils gnupg2 make gcc g++ mlocate -y   
-RUN groupadd -r -f -g ${GID} ${USER} && useradd -o -r -l -u ${UID} -g ${GID} -ms /bin/bash ${USER}
+
+RUN groupadd -r -f -g ${gid} ${USER} && useradd -o -r -l -u ${uid} -g ${gid} -ms /bin/bash ${USER}
 RUN usermod -aG sudo ${USER}
 RUN echo ${USER}:${PASSWORD} | chpasswd
 USER ${USER}

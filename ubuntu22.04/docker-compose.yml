@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  ubuntu22-python3-latest:
+    image: ubuntu22-python3-latest
+    runtime: nvidia
+    env_file: .devcontainer/devcontainer.env
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+      shm_size: "2gb"
+      args:
+        USER: ${USER}
+    shm_size: 2gb
+    environment:
+      Pytorch_ENV: development
+      USER: ${USER}
+    container_name: ubuntu22-python-develop-latest
+    user: ${USER}
+    restart: "always"
+    cap_add:
+      - ALL
+    cap_drop:
+      - NET_ADMIN
+      - SYS_ADMIN
+    ports:
+      - "6008:6008"
+      - "24:24"
+    volumes:
+      - /home/liushuai/.ssh/id_rsa.pub:/home/liushuai/.ssh/id_rsa.pub
+      - /home/liushuai/下载:/home/liushuai/download
+    command: /bin/sh -c "while sleep 1000; do :; done"

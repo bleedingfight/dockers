@@ -17,22 +17,19 @@
 
 ARG CUDA_VERSION=12.0.1
 
-FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu20.04 as tensorrt-develop-cudnn8-devel-ubuntu20.04
-LABEL maintainer="bleedingfight@126.com"
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu20.04
+LABEL maintainer="NVIDIA CORPORATION"
 
 ENV TRT_VERSION 8.6.1.6
 SHELL ["/bin/bash", "-c"]
 
 # Setup user account
-ARG uid
-ARG gid
-ARG USER
-ARG PASSWORD
-
-RUN groupadd -r -f -g ${gid} ${USER} && useradd -o -r -l -u ${uid} -g ${gid} -ms /bin/bash ${USER}
-RUN usermod -aG sudo ${USER}
-RUN echo ${USER}:${PASSWORD} | chpasswd
-RUN mkdir -p /workspace && chown ${USER} /workspace
+ARG uid=1000
+ARG gid=1000
+RUN groupadd -r -f -g ${gid} trtuser && useradd -o -r -l -u ${uid} -g ${gid} -ms /bin/bash trtuser
+RUN usermod -aG sudo trtuser
+RUN echo 'trtuser:nvidia' | chpasswd
+RUN mkdir -p /workspace && chown trtuser /workspace
 
 # Required to build Ubuntu 20.04 without user prompts with DLFW container
 ENV DEBIAN_FRONTEND=noninteractive
@@ -41,11 +38,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
 
 # Install requried libraries
-RUN sed -i "s/archive.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list && apt-get update && apt-get install -y software-properties-common
+RUN apt-get update && apt-get install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
-    fish \
     wget \
     git \
     pkg-config \
@@ -94,7 +90,7 @@ else \
 fi
 
 # Install PyPI packages
-RUN pip3 install --upgrade pip && pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip3 install --upgrade pip
 RUN pip3 install setuptools>=41.0.0
 COPY requirements.txt /tmp/requirements.txt
 RUN pip3 install -r /tmp/requirements.txt
@@ -119,5 +115,5 @@ ENV PATH="${PATH}:/usr/local/bin/ngc-cli"
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${TRT_OSSPATH}/build/out:${TRT_LIBPATH}"
 WORKDIR /workspace
 
-USER $USER
+USER trtuser
 RUN ["/bin/bash"]

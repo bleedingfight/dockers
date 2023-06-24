@@ -1,0 +1,67 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.194.0/containers/docker-existing-docker-compose
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"forwardPorts": [
+		22,
+		6006,
+		8888
+	],
+	// "workspaceFolder": "${HOME}/",
+	"name": "ubuntu20.04-dev",
+	"settings": {
+		"terminal.integrated.shell.linux": "/usr/bin/zsh"
+	},
+	"containerEnv": {
+		"USER": "liushuai",
+		"WORKSPACE": "/home/${USER}",
+		"EDITOR": "${localEnv:EDITOR}"
+	},
+	"remoteEnv": {
+		"PATH": "${containerEnv:PATH}",
+		"LD_LIBRARY_PATH": "/usr/local/include:${LD_LIBRARY_PATH}"
+	},
+	"mounts": [
+		"source=${localEnv:HOME}/tensorflow,target=/home/liushuai/tensorflow,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.cache,target=/home/liushuai/.cache,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.vim,target=/home/liushuai/.vim,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.vimrc,target=/home/liushuai/.vimrc,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.oh-my-zsh,target=/home/liushuai/.oh-my-zsh,type=bind,consistency=cached",
+	],
+	"remoteUser": "liushuai",
+	"containerUser": "liushuai",
+	"shutdownAction": "none",
+	"runArgs": [
+		"--env-file",
+		".devcontainer/devcontainer.env"
+	],
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"austin.code-gnu-global",
+		"ms-vscode.cpptools",
+		"twxs.cmake",
+		"ms-vscode.cmake-tools",
+		"ms-vsliveshare.vsliveshare",
+		"ms-vsliveshare.vsliveshare-audio",
+		"ms-python.vscode-pylance",
+		"ms-python.python",
+		"tht13.python",
+		"kevinrose.vsc-python-indent",
+		"mutantdino.resourcemonitor",
+		"tabnine.tabnine-vscode",
+		"visualstudioexptteam.vscodeintellicode"
+	]
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Uncomment the next line if you want start specific services in your Docker Compose config.
+	// "runServices": [],
+	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+	// "shutdownAction": "none",
+	// Uncomment the next line to run commands after the container is created - for example installing curl.
+	// "postCreateCommand": "apt-get update && apt-get install -y curl",
+	// Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode"
+}

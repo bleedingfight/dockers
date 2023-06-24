@@ -7,8 +7,9 @@ ARG USER_UID
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i "s/archive.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list &&apt update && apt install software-properties-common -y && apt-add-repository ppa:fish-shell/release-3 && apt update && apt install ca-certificates  libssl-dev sudo nmap openssh-server iproute2 wget curl git apt-utils gnupg2 make gcc g++ mlocate -y   
-RUN groupadd -r -f -g ${gid} $USER && useradd -o -r -l -u ${uid} -g ${gid} -ms /bin/bash $USER && usermod -aG sudo $USER && echo $USER:$PASSWORD | chpasswd  &&mkdir -p /workspace && chown $USER /workspace
-
+RUN groupadd -r -f -g ${GID} ${USER} && useradd -o -r -l -u ${UID} -g ${GID} -ms /bin/bash ${USER}
+RUN usermod -aG sudo ${USER}
+RUN echo ${USER}:${PASSWORD} | chpasswd
 USER ${USER}
 ARG MINICONDA=Miniconda3-latest-Linux-x86_64.sh
 
